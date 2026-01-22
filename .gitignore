@@ -29,3 +29,4 @@ replay_pid*
 /build
 /build/reports/problems
 .gradle/buildOutputCleanup/buildOutputCleanup.lock
+/build/reports

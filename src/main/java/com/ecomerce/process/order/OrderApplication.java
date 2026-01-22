@@ -1,6 +1,7 @@
 package com.ecomerce.process.order;
 
 import com.ecomerce.process.order.domain.*;
+import com.ecomerce.process.order.repository.AppUserRepository;
 import com.ecomerce.process.order.repository.OrderItemRepository;
 import com.ecomerce.process.order.repository.OrderRepository;
 import com.ecomerce.process.order.repository.ProductRepository;
@@ -20,17 +21,17 @@ public class OrderApplication implements CommandLineRunner{
 
 	private final OrderRepository orderRepository;
 	private final ProductRepository productRepository;
-	private final OrderItemRepository orderItemRepository;
+	private final AppUserRepository appUserRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(OrderApplication.class, args);
 		logger.info("Order Service is running...");
 	}
 
-	public OrderApplication(OrderRepository orderRepository, ProductRepository productRepository, OrderItemRepository orderItemRepository) {
+	public OrderApplication(OrderRepository orderRepository, ProductRepository productRepository, AppUserRepository appUserRepository) {
 		this.orderRepository = orderRepository;
         this.productRepository = productRepository;
-        this.orderItemRepository = orderItemRepository;
+        this.appUserRepository = appUserRepository;
     }
 
 	@Override
@@ -53,6 +54,13 @@ public class OrderApplication implements CommandLineRunner{
 
 		orderRepository.saveAll(Arrays.asList(order1, order2, order3, order4, order5));
 		logger.info("Number of orders: {}", orderRepository.count());
+
+		// Username: user, password: user
+		appUserRepository.save(new AppUser("user",
+				"$2a$10$NVM0n8ElaRgg7zWO1CxUdei7vWoPg91Lz2aYavh9.f9q0e4bRadue","USER"));
+		// Username: admin, password: admin
+		appUserRepository.save(new AppUser("admin",
+						"$2a$10$8cjz47bjbR4Mn8GMg9IZx.vyjhLXR/SKKMSZ9. mP9vpMu0ssKi8GW", "ADMIN"));
 
 	}
 }

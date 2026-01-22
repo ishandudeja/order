@@ -5,11 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
 @Entity
 public class AppUser {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(nullable=false, updatable=false)
     private Long id;
 
@@ -23,6 +24,7 @@ public class AppUser {
     private String role;
 
     public AppUser() {}
+
     public AppUser(String username, String password, String role) {
         super();
         this.username = username;
