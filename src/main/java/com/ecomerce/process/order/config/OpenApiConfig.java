@@ -9,7 +9,7 @@ import io.swagger.v3.oas.models.info.Info;
 public class OpenApiConfig {
 
     @Bean
-    public OpenAPI carDatabaseOpenAPI() {
+    public OpenAPI OrderOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
                         .title("E-Commerce Order Process API")
