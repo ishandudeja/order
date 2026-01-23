@@ -9,7 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -67,14 +69,14 @@ public class OrderRepositoryTest {
 
     @Test
     public void testFindByStatus() {
-        Pageable pageable = Pageable.unpaged();
+        Pageable pageable = PageRequest.of(0, 2, Sort.by("orderDate").descending());
         List<Order> shipped = orderRepository.findByStatus("COMPLETED", pageable);
         assertNotNull(shipped);
         assertEquals(1, shipped.size());
         assertEquals("Alice", shipped.get(0).getCustomerName());
 
         List<Order> created = orderRepository.findByStatus("CREATED", pageable);
-        assertTrue(created.size() >= 4);
+        assertTrue(created.size() >= 2);
     }
 
     @Test

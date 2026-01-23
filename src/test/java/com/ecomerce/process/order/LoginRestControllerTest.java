@@ -18,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class OrderRestTest {
+public class LoginRestControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
