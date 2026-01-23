@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -57,7 +58,8 @@ public class OrderRepositoryTest {
 
     @Test
     public void testFindByCustomerName() {
-        List<Order> result = orderRepository.findByCustomerName("Justin");
+        Pageable pageable = Pageable.unpaged();
+        List<Order> result = orderRepository.findByCustomerName("Justin", pageable);
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals("Justin", result.get(0).getCustomerName());
@@ -65,19 +67,20 @@ public class OrderRepositoryTest {
 
     @Test
     public void testFindByStatus() {
-        List<Order> shipped = orderRepository.findByStatus("COMPLETED");
+        Pageable pageable = Pageable.unpaged();
+        List<Order> shipped = orderRepository.findByStatus("COMPLETED", pageable);
         assertNotNull(shipped);
         assertEquals(1, shipped.size());
         assertEquals("Alice", shipped.get(0).getCustomerName());
 
-        List<Order> created = orderRepository.findByStatus("CREATED");
+        List<Order> created = orderRepository.findByStatus("CREATED", pageable);
         assertTrue(created.size() >= 4);
     }
 
     @Test
     public void testFindByAmountGreaterThan() {
         // product1 price 999 * 2 in Justin => amount >= 1998
-        List<Order> expensive = orderRepository.findByAmountGreaterThan(1000);
+        List<Order> expensive = orderRepository.findByAmountGreaterThan(1000, Pageable.unpaged());
         assertNotNull(expensive);
         assertTrue(expensive.stream().anyMatch(o -> o.getCustomerName().equals("Justin")));
     }
@@ -85,7 +88,7 @@ public class OrderRepositoryTest {
     @Test
     public void testFindByOrderDateBetween() {
         LocalDate today = LocalDate.now();
-        List<Order> between = orderRepository.findByOrderDateBetween(today.minusDays(1), today.plusDays(1));
+        List<Order> between = orderRepository.findByOrderDateBetween(today.minusDays(1), today.plusDays(1), Pageable.unpaged());
         assertNotNull(between);
         // all created orders should be in this range
         assertTrue(between.size() >= 5);
@@ -94,7 +97,7 @@ public class OrderRepositoryTest {
     @Test
     public void testFindByItemCountLessThan() {
         // Several orders have 1 item
-        List<Order> singleItem = orderRepository.findByItemCountLessThan(2);
+        List<Order> singleItem = orderRepository.findByItemCountLessThan(2, Pageable.unpaged());
         assertNotNull(singleItem);
         assertTrue(singleItem.stream().anyMatch(o -> o.getCustomerName().equals("Alice")));
     }
@@ -102,7 +105,7 @@ public class OrderRepositoryTest {
     @Test
     public void testFindByItemsProductsPriceGreaterThan() {
         // price > 800 should pick up orders containing product1 (999)
-        List<Order> highPrice = orderRepository.findByItems_Products_PriceGreaterThan(800);
+        List<Order> highPrice = orderRepository.findByItems_Products_PriceGreaterThan(800, Pageable.unpaged());
         assertNotNull(highPrice);
         assertTrue(highPrice.stream().anyMatch(o -> Arrays.asList("Justin","Bob","Eve").contains(o.getCustomerName())));
     }
