@@ -64,18 +64,36 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
+                // Enable CORS with default configuration
                 .cors(withDefaults())
+                // Disable session creation
                 .sessionManagement((sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests((authorizeHttpRequests) ->
-                        authorizeHttpRequests.requestMatchers(HttpMethod.POST,
-                                "/login").permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(authorize -> authorize
+                        // Allow pre-flight CORS requests
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        // Allow unauthenticated POST to /login
+                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                        // Allow access to OpenAPI and Swagger UI resources so UI can load and then send Authorization header
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui/index.html",
+                                "/api-docs"
+
+                        ).permitAll()
+                        // All other requests require authentication
+                        .anyRequest().authenticated()
+                )
+                // Add our custom authentication filter before the UsernamePasswordAuthenticationFilter
                 .addFilterBefore(authenticationFilter,
                         UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exceptionHandling) -> exceptionHandling.authenticationEntryPoint(exceptionHandler));
 
         return http.build();
     }
-
+// CORS configuration to allow all origins, methods, and headers
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source =
