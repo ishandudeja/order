@@ -63,4 +63,8 @@ public class Product {
         this.orderItems = orderItems;
     }
 
+    public String toString() {
+        return String.format("Product: %s, @%s",name, price);
+    }
+
 }

@@ -38,7 +38,7 @@ public class LoginRestControllerTest {
         AppUser u = new AppUser();
         u.setUsername("admin");
         u.setPassword(passwordEncoder.encode("admin"));
-        u.setRole("USER");
+        u.setRole("ADMIN");
         userRepository.save(u);
     }
 

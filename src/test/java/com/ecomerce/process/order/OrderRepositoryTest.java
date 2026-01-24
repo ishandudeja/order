@@ -12,6 +12,9 @@ import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -54,6 +57,11 @@ public class OrderRepositoryTest {
 
         // Give one order a different status to test status queries
         order2.setStatus("COMPLETED");
+
+        // Set a SecurityContext with ROLE_USER so any @PreAuthorize checks (if enabled) pass
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken("user", "", AuthorityUtils.createAuthorityList("ROLE_USER"))
+        );
 
         orderRepository.saveAll(Arrays.asList(order1, order2, order3, order4, order5));
     }
