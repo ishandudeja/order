@@ -7,7 +7,7 @@ import org.springframework.data.rest.core.config.Projection;
 import java.time.LocalDate;
 import java.util.List;
 
-@Projection(name = "", types = { Order.class })
+@Projection(name = "order", types = { Order.class })
 public interface OrderProjection {
     Long getId();
     String getCustomerName();

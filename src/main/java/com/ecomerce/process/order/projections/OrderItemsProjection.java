@@ -7,7 +7,7 @@ import org.springframework.data.rest.core.config.Projection;
 
 import java.util.List;
 
-@Projection(name = "", types = { OrderItem.class })
+@Projection(name = "items", types = { OrderItem.class })
 public interface OrderItemsProjection {
 
     Long getId();
