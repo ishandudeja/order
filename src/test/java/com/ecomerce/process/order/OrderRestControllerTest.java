@@ -74,7 +74,7 @@ public class OrderRestControllerTest {
     @Test
     public void testCreateRetrieveUpdateAndSearchOrder_viaRest() throws Exception {
         // create Order via repository (complex nested items aren't created via Data REST easily)
-        Order order = new Order("CustomerRest", Arrays.asList(new OrderItem(product, 2)));
+        Order order = new Order("CustomerRest","Justin@example.com", "+64 234567890", Arrays.asList(new OrderItem(product, 2)));
         order = orderRepository.save(order);
 
         String auth = TestAuthUtil.obtainAuthHeader(mockMvc, "admin", "admin");

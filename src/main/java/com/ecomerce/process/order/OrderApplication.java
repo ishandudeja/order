@@ -10,12 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.ObjectProvider;
 
 import java.util.Arrays;
 
+@EnableAsync
 @SpringBootApplication
 @EnableMethodSecurity
 public class OrderApplication implements CommandLineRunner {
@@ -54,11 +56,11 @@ public class OrderApplication implements CommandLineRunner {
 
         // Do NOT call orderItemRepository.saveAll(...) here. Instead rely on cascade from Order.
 
-        Order order1 = new Order("Justin", Arrays.asList(new OrderItem(product1, 2), new OrderItem(product2, 1)));
-        Order order2 = new Order("Alice", Arrays.asList(new OrderItem(product2, 1)));
-        Order order3 = new Order("Bob", Arrays.asList(new OrderItem(product1, 1)));
-        Order order4 = new Order("Eve", Arrays.asList(new OrderItem(product1, 1), new OrderItem(product3, 3)));
-        Order order5 = new Order("Charlie", Arrays.asList(new OrderItem(product3, 3)));
+        Order order1 = new Order("Justin", "Justin@example.com", "+64 234567890", Arrays.asList(new OrderItem(product1, 2), new OrderItem(product2, 1)));
+        Order order2 = new Order("Alice", "Alice@example.com", "+64 234567890", Arrays.asList(new OrderItem(product2, 1)));
+        Order order3 = new Order("Bob", "Bob@example.com", "+64 234567890", Arrays.asList(new OrderItem(product1, 1)));
+        Order order4 = new Order("Eve", "Eve@example.com", "+64 234567890", Arrays.asList(new OrderItem(product1, 1), new OrderItem(product3, 3)));
+        Order order5 = new Order("Charlie", "Charlie@example.com", "+64 234567890", Arrays.asList(new OrderItem(product3, 3)));
 
 
         // Username: user, password: user

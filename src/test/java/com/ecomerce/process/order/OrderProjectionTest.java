@@ -19,7 +19,7 @@ public class OrderProjectionTest {
         ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
         Product product1 = new Product("Apple iPhone 13", 999, 5);
         // Assuming Order is a valid class in your domain
-        Order order = new Order("Justin", Arrays.asList( new OrderItem(product1, 2)));
+        Order order = new Order("Justin","Justin@example.com", "+64 234567890", Arrays.asList( new OrderItem(product1, 2)));
         OrderProjection projection = factory.createProjection(OrderProjection.class, order);
         // Add assertions here to validate the projection
         assertThat(projection.getCustomerName()).isEqualTo("Justin");

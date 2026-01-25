@@ -49,11 +49,11 @@ public class OrderRepositoryTest {
         product3 = productRepository.save(product3);
 
         // Create a variety of orders
-        Order order1 = new Order("Justin", Arrays.asList(new OrderItem(product1, 2), new OrderItem(product2, 1)));
-        Order order2 = new Order("Alice", Arrays.asList(new OrderItem(product2, 1)));
-        Order order3 = new Order("Bob", Arrays.asList(new OrderItem(product1, 1)));
-        Order order4 = new Order("Eve", Arrays.asList(new OrderItem(product1, 1), new OrderItem(product3, 3)));
-        Order order5 = new Order("Charlie", Arrays.asList(new OrderItem(product3, 3)));
+        Order order1 = new Order("Justin","Justin@example.com", "+64 234567890", Arrays.asList(new OrderItem(product1, 2), new OrderItem(product2, 1)));
+        Order order2 = new Order("Alice","Alice@example.com", "+64 234567890", Arrays.asList(new OrderItem(product2, 1)));
+        Order order3 = new Order("Bob","Bob@example.com", "+64 234567890", Arrays.asList(new OrderItem(product1, 1)));
+        Order order4 = new Order("Eve","Eve@example.com", "+64 234567890", Arrays.asList(new OrderItem(product1, 1), new OrderItem(product3, 3)));
+        Order order5 = new Order("Charlie","Charlie@example.com", "+64 234567890", Arrays.asList(new OrderItem(product3, 3)));
 
         // Give one order a different status to test status queries
         order2.setStatus("COMPLETED");

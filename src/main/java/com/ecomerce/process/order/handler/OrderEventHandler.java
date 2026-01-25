@@ -2,6 +2,7 @@ package com.ecomerce.process.order.handler;
 
 import com.ecomerce.process.order.domain.Order;
 import com.ecomerce.process.order.repository.OrderRepository;
+import com.ecomerce.process.order.service.EventPublisherService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.slf4j.Logger;
@@ -21,14 +22,17 @@ public class OrderEventHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderEventHandler.class.getName());
     private final OrderRepository orderRepository;
+    private final EventPublisherService eventPublisherService;
 
     @PersistenceContext
     private EntityManager entityManager;
     public OrderEventHandler() {
         this.orderRepository = null;
+        this.eventPublisherService = null;
     }
     @Autowired
-    public OrderEventHandler(OrderRepository orderRepository) {
+    public OrderEventHandler(OrderRepository orderRepository, EventPublisherService eventPublisherService) {
+        this.eventPublisherService = eventPublisherService;
         this.orderRepository = orderRepository;
     }
 
@@ -39,6 +43,8 @@ public class OrderEventHandler {
     public void handleAfterCreate(Order entity) {
         // Logic to execute after creating an order
         logger.info("Order created with ID: " + entity.getId());
+        eventPublisherService.publishEvent(entity);
+
     }
 
     @HandleBeforeSave
@@ -60,10 +66,12 @@ public class OrderEventHandler {
             if (entity.getStatus().equals("CANCELLED")) {
                 logger.info("Order is being cancelled. Performing necessary actions.");
                 // Additional logic for cancellation can be added here
+                eventPublisherService.publishEvent(entity);
             }
             if (entity.getStatus().equals("COMPLETED")) {
                 logger.info("Order is being marked as shipped. Notifying customer.");
                 // Additional logic for shipping can be added here
+                eventPublisherService.publishEvent(entity);
             }
         }
         entityManager.clear(); // Clear the persistence context

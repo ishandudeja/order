@@ -15,7 +15,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String customerName, status;
+    private String customerName, status, email, phoneNumber;
     private int itemCount, amount;
     private LocalDate orderDate;
 
@@ -28,7 +28,7 @@ public class Order {
     }
 
     // Ensure items are attached to this order when created
-    public Order(String customerName, List<OrderItem> items) {
+    public Order(String customerName, String email, String phoneNumber,List<OrderItem> items) {
         this.customerName = customerName;
         this.items = new ArrayList<>();
         if (items != null) {
@@ -39,6 +39,8 @@ public class Order {
         this.amount = this.items.stream().mapToInt(OrderItem::getPrice).sum();
         this.orderDate = LocalDate.now();
         this.status = "CREATED";
+        this.email = email;
+        this.phoneNumber = phoneNumber;
     }
     public Long getId() {
         return id;
@@ -96,5 +98,16 @@ public class Order {
         item.setOrder(null);
         this.itemCount = items.size();
     }
-
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }
