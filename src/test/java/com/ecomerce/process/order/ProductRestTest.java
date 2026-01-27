@@ -1,7 +1,7 @@
 package com.ecomerce.process.order;
 
 import com.ecomerce.process.order.domain.AppUser;
-import com.ecomerce.process.order.repository.ProductRepository;
+//import com.ecomerce.process.order.repository.ProductRepository;
 import com.ecomerce.process.order.repository.OrderRepository;
 import com.ecomerce.process.order.repository.AppUserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -28,8 +28,8 @@ public class ProductRestTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ProductRepository productRepository;
+//    @Autowired
+//    private ProductRepository productRepository;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -53,14 +53,14 @@ public class ProductRestTest {
 
         // Remove orders first (they reference products) then products to avoid FK constraint
         orderRepository.deleteAll();
-        productRepository.deleteAll();
+//        productRepository.deleteAll();
     }
 
     @AfterEach
     public void cleanup() {
         userRepository.findByUsername("admin").ifPresent(userRepository::delete);
         orderRepository.deleteAll();
-        productRepository.deleteAll();
+//        productRepository.deleteAll();
     }
 
     @Test

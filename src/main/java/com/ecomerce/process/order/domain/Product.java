@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import java.util.ArrayList;
 import java.util.List;
+;
 
 @Entity
 public class Product {
@@ -16,8 +17,7 @@ public class Product {
     private String name;
     private int price, rating;
 
-    @ManyToMany(mappedBy = "products")
-    private List<OrderItem> orderItems = new ArrayList<>();
+
 
     public Product() {}
 
@@ -53,14 +53,6 @@ public class Product {
 
     public void setRating(int rating) {
         this.rating = rating;
-    }
-
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
     }
 
     public String toString() {

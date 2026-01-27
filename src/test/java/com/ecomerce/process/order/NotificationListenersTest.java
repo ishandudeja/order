@@ -2,7 +2,7 @@ package com.ecomerce.process.order;
 
 import com.ecomerce.process.order.domain.Order;
 import com.ecomerce.process.order.domain.OrderItem;
-import com.ecomerce.process.order.domain.Product;
+//import com.ecomerce.process.order.domain.Product;
 import com.ecomerce.process.order.event.EmailNotificatonListener;
 import com.ecomerce.process.order.event.PhoneNotificationListener;
 import com.ecomerce.process.order.event.template.EmailNotificationTemplate;
@@ -22,8 +22,8 @@ public class NotificationListenersTest {
     public void emailListener_receivesEventAndLogs() {
         EmailNotificationService emailNotificationService = mock(EmailNotificationService.class);
         EmailNotificatonListener listener = new EmailNotificatonListener(emailNotificationService);
-        Product p = new Product("Cam", 150, 4);
-        OrderItem item = new OrderItem(p, 1);
+//        Product p = new Product("Cam", 150, 4);
+        OrderItem item = new OrderItem("Cam", 150, 1);
         Order order = new Order("Dan", "dan@example.com", "333222111", Collections.singletonList(item));
         order.setStatus("COMPLETED");
 
@@ -38,8 +38,8 @@ public class NotificationListenersTest {
     public void phoneListener_receivesEventAndLogs() {
         PhoneNotificationService phoneNotificationService = mock(PhoneNotificationService.class);
         PhoneNotificationListener listener = new PhoneNotificationListener(phoneNotificationService);
-        Product p = new Product("Cam", 150, 4);
-        OrderItem item = new OrderItem(p, 1);
+
+        OrderItem item = new OrderItem("Cam", 150, 1);
         Order order = new Order("Eve", "eve@example.com", "444555666", Collections.singletonList(item));
         order.setStatus("SHIPPED");
 

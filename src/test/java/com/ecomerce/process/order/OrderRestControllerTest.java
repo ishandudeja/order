@@ -3,10 +3,10 @@ package com.ecomerce.process.order;
 import com.ecomerce.process.order.domain.AppUser;
 import com.ecomerce.process.order.domain.Order;
 import com.ecomerce.process.order.domain.OrderItem;
-import com.ecomerce.process.order.domain.Product;
+//import com.ecomerce.process.order.domain.Product;
 import com.ecomerce.process.order.repository.AppUserRepository;
 import com.ecomerce.process.order.repository.OrderRepository;
-import com.ecomerce.process.order.repository.ProductRepository;
+//import com.ecomerce.process.order.repository.ProductRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,8 +32,8 @@ public class OrderRestControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ProductRepository productRepository;
+//    @Autowired
+//    private ProductRepository productRepository;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -44,16 +44,16 @@ public class OrderRestControllerTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private Product product;
+//    private Product product;
 
     @BeforeEach
     public void setup() {
         // ensure clean DB: delete orders first then products
         orderRepository.deleteAll();
-        productRepository.deleteAll();
+//        productRepository.deleteAll();
 
         // create a product to use in order items
-        product = productRepository.save(new Product("TestPhone-Order", 200, 5));
+//        product = productRepository.save(new Product("TestPhone-Order", 200, 5));
 
         // create admin user
         userRepository.findByUsername("admin").ifPresent(userRepository::delete);
@@ -68,13 +68,13 @@ public class OrderRestControllerTest {
     public void cleanup() {
         userRepository.findByUsername("admin").ifPresent(userRepository::delete);
         orderRepository.deleteAll();
-        productRepository.deleteAll();
+//        productRepository.deleteAll();
     }
 
     @Test
     public void testCreateRetrieveUpdateAndSearchOrder_viaRest() throws Exception {
         // create Order via repository (complex nested items aren't created via Data REST easily)
-        Order order = new Order("CustomerRest","Justin@example.com", "+64 234567890", Arrays.asList(new OrderItem(product, 2)));
+        Order order = new Order("CustomerRest","Justin@example.com", "+64 234567890", Arrays.asList(new OrderItem("TestPhone-Order", 200, 2)));
         order = orderRepository.save(order);
 
         String auth = TestAuthUtil.obtainAuthHeader(mockMvc, "admin", "admin");

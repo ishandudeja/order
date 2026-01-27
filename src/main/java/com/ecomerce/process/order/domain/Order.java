@@ -19,7 +19,7 @@ public class Order {
     private int itemCount, amount;
     private LocalDate orderDate;
 
-    @JsonIgnore
+//    @JsonIgnore
     // new: one Order has many OrderItem
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();

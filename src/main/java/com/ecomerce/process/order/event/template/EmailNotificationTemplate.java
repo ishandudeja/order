@@ -1,7 +1,6 @@
 package com.ecomerce.process.order.event.template;
 
 import com.ecomerce.process.order.domain.Order;
-import com.ecomerce.process.order.domain.Product;
 import org.springframework.context.ApplicationEvent;
 
 public class EmailNotificationTemplate extends ApplicationEvent {
@@ -54,9 +53,9 @@ public class EmailNotificationTemplate extends ApplicationEvent {
         sb.append("Items:\n");
         order.getItems().forEach(item -> {
             sb.append("- ");
-            item.getProducts().forEach(product -> {
-                sb.append(product.toString()).append(" ");
-            });
+
+                sb.append(item.toString()).append(" ");
+
             sb.append("(Quantity: ").append(item.getQuantity())
               .append(", Price: $").append(item.getPrice()).append(")\n");
         });

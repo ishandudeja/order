@@ -2,7 +2,6 @@ package com.ecomerce.process.order;
 
 import com.ecomerce.process.order.domain.Order;
 import com.ecomerce.process.order.domain.OrderItem;
-import com.ecomerce.process.order.domain.Product;
 import com.ecomerce.process.order.event.template.EmailNotificationTemplate;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +13,7 @@ public class EmailNotificationTemplateTest {
 
     @Test
     public void generateEmailContent_includesOrderDetailsAndSubject() {
-        Product p = new Product("Phone", 200, 5);
-        OrderItem item = new OrderItem(p, 1);
+        OrderItem item = new OrderItem("Phone", 200, 1);
         Order order = new Order("Bob", "bob@example.com", "000111222", Arrays.asList(item));
         order.setStatus("SHIPPED");
 

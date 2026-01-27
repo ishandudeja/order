@@ -10,7 +10,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
-@RepositoryRestResource(path="orders", excerptProjection = OrderProjection.class)
+
+@RepositoryRestResource(path="orders")
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT o FROM Order o WHERE o.customerName = :customerName")
     List<Order> findByCustomerName(@Param("customerName") String customerName, Pageable pageable);
@@ -23,8 +24,11 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByItemCountLessThan(int itemCount, Pageable pageable);
 
-    List<Order> findByItems_Products_Name(String productName, Pageable pageable);
+    // Fetch orders with items to avoid lazy init exceptions when serializing
+    @Query("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.items")
+    List<Order> findAllWithItems();
 
-    List<Order> findByItems_Products_PriceGreaterThan(int price, Pageable pageable);
+//    @PreAuthorize("hasRole('ADMIN')")
+//    void deleteById(Long id);
 
 }

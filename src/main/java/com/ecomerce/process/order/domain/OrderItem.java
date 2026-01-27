@@ -9,6 +9,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class OrderItem {
@@ -18,25 +19,20 @@ public class OrderItem {
     private Long id;
     private int quantity;
     private int price;
+    private String productName;
 
     // many OrderItem belong to one Order
     @ManyToOne
+    @JsonIgnore
     private Order order;
-
-    // one OrderItem can have many Products
-    @ManyToMany
-    @JoinTable(name = "orderitem_product",
-        joinColumns = @JoinColumn(name = "orderitem_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products = new ArrayList<>();
 
     public OrderItem() {}
 
-    public OrderItem(Product product, int quantity) {
-        this.products.add(product);
+    public OrderItem(String productName, int price,int quantity) {
+        //this.products.add(product);
+        this.productName = productName;
         this.quantity = quantity;
-        this.price = product.getPrice() * quantity;
+        this.price = price * quantity;
     }
 
     // getters/setters
@@ -68,19 +64,15 @@ public class OrderItem {
         this.order = order;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProducts(String productName) {
+        this.productName = productName;
     }
 
-    public void addProduct(Product product) {
-        products.add(product);
-    }
-
-    public void removeProduct(Product product) {
-        products.remove(product);
+    public String toString() {
+        return String.format("Product: %s, @%s",productName, price);
     }
 }

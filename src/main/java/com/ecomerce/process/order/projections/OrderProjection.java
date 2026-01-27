@@ -15,5 +15,7 @@ public interface OrderProjection {
     int getAmount();
     LocalDate getOrderDate();
     int getItemCount();
+    String getEmail();
+    String getPhoneNumber();
     List<OrderItem> getItems();
 }

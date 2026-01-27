@@ -2,7 +2,7 @@ package com.ecomerce.process.order;
 
 import com.ecomerce.process.order.domain.Order;
 import com.ecomerce.process.order.domain.OrderItem;
-import com.ecomerce.process.order.domain.Product;
+//import com.ecomerce.process.order.domain.Product;
 import com.ecomerce.process.order.event.template.EmailNotificationTemplate;
 import com.ecomerce.process.order.event.template.PhoneNotificationTemplate;
 import com.ecomerce.process.order.service.EventPublisherService;
@@ -33,8 +33,8 @@ public class EventPublisherServiceTest {
 
     @Test
     public void publishEvent_shouldPublishEmailAndPhoneTemplates() {
-        Product p = new Product("TestProduct", 100, 5);
-        OrderItem item = new OrderItem(p, 2);
+
+        OrderItem item = new OrderItem("TestProduct", 100, 2);
         Order order = new Order("Alice", "alice@example.com", "1234567890", Arrays.asList(item));
 
         eventPublisherService.publishEvent(order);

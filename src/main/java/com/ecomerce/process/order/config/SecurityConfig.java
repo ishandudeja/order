@@ -65,6 +65,12 @@ public class SecurityConfig {
     //   forgery (csrf). JWTs are designed to be stateless, which reduces the risk of session-related vulnerabilities.
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        // Add this one
+//        http.csrf((csrf) -> csrf.disable()).cors(withDefaults())
+//                .authorizeHttpRequests((authorizeHttpRequests) ->
+//                        authorizeHttpRequests.anyRequest().permitAll());
+
         http.csrf(AbstractHttpConfigurer::disable)
                 // Enable CORS with default configuration
                 .cors(withDefaults())

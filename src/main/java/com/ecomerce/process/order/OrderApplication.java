@@ -36,7 +36,8 @@ public class OrderApplication implements CommandLineRunner {
         logger.info("Order Service is running...");
     }
 
-    public OrderApplication(OrderRepository orderRepository, ProductRepository productRepository,
+    public OrderApplication(OrderRepository orderRepository,
+                            ProductRepository productRepository,
                             AppUserRepository appUserRepository, ObjectProvider<SecurityUtils> securityUtilsProvider) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
@@ -56,11 +57,11 @@ public class OrderApplication implements CommandLineRunner {
 
         // Do NOT call orderItemRepository.saveAll(...) here. Instead rely on cascade from Order.
 
-        Order order1 = new Order("Justin", "Justin@example.com", "+64 234567890", Arrays.asList(new OrderItem(product1, 2), new OrderItem(product2, 1)));
-        Order order2 = new Order("Alice", "Alice@example.com", "+64 234567890", Arrays.asList(new OrderItem(product2, 1)));
-        Order order3 = new Order("Bob", "Bob@example.com", "+64 234567890", Arrays.asList(new OrderItem(product1, 1)));
-        Order order4 = new Order("Eve", "Eve@example.com", "+64 234567890", Arrays.asList(new OrderItem(product1, 1), new OrderItem(product3, 3)));
-        Order order5 = new Order("Charlie", "Charlie@example.com", "+64 234567890", Arrays.asList(new OrderItem(product3, 3)));
+        Order order1 = new Order("Justin", "Justin@example.com", "+64 234567890", Arrays.asList(new OrderItem("Apple iPhone 13", 999, 2), new OrderItem("Apple iPhone 14", 999, 1)));
+        Order order2 = new Order("Alice", "Alice@example.com", "+64 234567890", Arrays.asList(new OrderItem("Samsung Galaxy S21", 799, 1)));
+        Order order3 = new Order("Bob", "Bob@example.com", "+64 234567890", Arrays.asList(new OrderItem("Apple iPhone 13", 999, 1)));
+        Order order4 = new Order("Eve", "Eve@example.com", "+64 234567890", Arrays.asList(new OrderItem("Apple iPhone 13", 999, 1), new OrderItem("Google Pixel 6", 599, 3)));
+        Order order5 = new Order("Charlie", "Charlie@example.com", "+64 234567890", Arrays.asList(new OrderItem("Google Pixel 6", 599, 3)));
 
 
         // Username: user, password: user

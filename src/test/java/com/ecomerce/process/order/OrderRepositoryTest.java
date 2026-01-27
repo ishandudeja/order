@@ -2,9 +2,9 @@ package com.ecomerce.process.order;
 
 import com.ecomerce.process.order.domain.Order;
 import com.ecomerce.process.order.domain.OrderItem;
-import com.ecomerce.process.order.domain.Product;
+//import com.ecomerce.process.order.domain.Product;
 import com.ecomerce.process.order.repository.OrderRepository;
-import com.ecomerce.process.order.repository.ProductRepository;
+//import com.ecomerce.process.order.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,32 +28,32 @@ public class OrderRepositoryTest {
     @Autowired
     private OrderRepository orderRepository;
 
-    @Autowired
-    private ProductRepository productRepository;
-
-    private Product product1;
-    private Product product2;
-    private Product product3;
+//    @Autowired
+//    private ProductRepository productRepository;
+//
+//    private Product product1;
+//    private Product product2;
+//    private Product product3;
 
     @BeforeEach
     public void setUp() {
         orderRepository.deleteAll();
-        productRepository.deleteAll();
-
-        product1 = new Product("Apple iPhone 13", 999, 5);
-        product2 = new Product("Samsung Galaxy S21", 799, 4);
-        product3 = new Product("Google Pixel 6", 599, 4);
-
-        product1 = productRepository.save(product1);
-        product2 = productRepository.save(product2);
-        product3 = productRepository.save(product3);
+//        productRepository.deleteAll();
+//
+//        product1 = new Product("Apple iPhone 13", 999, 5);
+//        product2 = new Product("Samsung Galaxy S21", 799, 4);
+//        product3 = new Product("Google Pixel 6", 599, 4);
+//
+//        product1 = productRepository.save(product1);
+//        product2 = productRepository.save(product2);
+//        product3 = productRepository.save(product3);
 
         // Create a variety of orders
-        Order order1 = new Order("Justin","Justin@example.com", "+64 234567890", Arrays.asList(new OrderItem(product1, 2), new OrderItem(product2, 1)));
-        Order order2 = new Order("Alice","Alice@example.com", "+64 234567890", Arrays.asList(new OrderItem(product2, 1)));
-        Order order3 = new Order("Bob","Bob@example.com", "+64 234567890", Arrays.asList(new OrderItem(product1, 1)));
-        Order order4 = new Order("Eve","Eve@example.com", "+64 234567890", Arrays.asList(new OrderItem(product1, 1), new OrderItem(product3, 3)));
-        Order order5 = new Order("Charlie","Charlie@example.com", "+64 234567890", Arrays.asList(new OrderItem(product3, 3)));
+        Order order1 = new Order("Justin","Justin@example.com", "+64 234567890", Arrays.asList(new OrderItem("Apple iPhone 13", 999, 2), new OrderItem("Samsung Galaxy S21", 799, 1)));
+        Order order2 = new Order("Alice","Alice@example.com", "+64 234567890", Arrays.asList(new OrderItem("Samsung Galaxy S21", 799, 1)));
+        Order order3 = new Order("Bob","Bob@example.com", "+64 234567890", Arrays.asList(new OrderItem("Apple iPhone 13", 999, 1)));
+        Order order4 = new Order("Eve","Eve@example.com", "+64 234567890", Arrays.asList(new OrderItem("Apple iPhone 13", 999, 1), new OrderItem("Google Pixel 6", 599, 3)));
+        Order order5 = new Order("Charlie","Charlie@example.com", "+64 234567890", Arrays.asList(new OrderItem("Google Pixel 6", 599, 3)));
 
         // Give one order a different status to test status queries
         order2.setStatus("COMPLETED");
@@ -110,14 +110,6 @@ public class OrderRepositoryTest {
         List<Order> singleItem = orderRepository.findByItemCountLessThan(2, Pageable.unpaged());
         assertNotNull(singleItem);
         assertTrue(singleItem.stream().anyMatch(o -> o.getCustomerName().equals("Alice")));
-    }
-
-    @Test
-    public void testFindByItemsProductsPriceGreaterThan() {
-        // price > 800 should pick up orders containing product1 (999)
-        List<Order> highPrice = orderRepository.findByItems_Products_PriceGreaterThan(800, Pageable.unpaged());
-        assertNotNull(highPrice);
-        assertTrue(highPrice.stream().anyMatch(o -> Arrays.asList("Justin","Bob","Eve").contains(o.getCustomerName())));
     }
 
 }
